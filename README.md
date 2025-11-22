@@ -1,6 +1,11 @@
 # 🇯🇵 Kibun Japan Planner (気分)
 
-![Kibun Japan Planner Banner]([https://via.placeholder.com/1200x600/2563eb/ffffff?text=Kibun+Japan+Planner](https://kibun-travel-assistant.vercel.app/))
+**Live Demo:** [https://kibun-travel-assistant.vercel.app/](https://kibun-travel-assistant.vercel.app/)
+
+<p align="center">
+  <img src="./public/chat-en.png" width="45%" />
+  <img src="./public/chat-jp.png" width="45%" />
+</p>
 
 ## 📖 Description
 
@@ -32,50 +37,10 @@
 
 ## 🏗️ System Architecture
 
-```mermaid
-flowchart TB
-    %% Client Layer
-    subgraph Client["Client · Next.js + React UI"]
-        A["User Input (Text / Voice)"]
-        B["Voice Recorder (Web Audio + MediaRecorder)"]
-        C["Language Toggle (EN ⇆ JA)"]
-        D["Result Panels (Weather · Map · Itinerary)"]
-    end
+![System Architecture Diagram](./public/system-architecture.svg)
 
-    %% Server Actions
-    subgraph Server["Next.js Server Actions"]
-        E["transcribeAudio()\n(Groq Whisper Large V3 Turbo)"]
-        F["parseTravelIntent()\n(Groq LLaMA 3.3 70B)"]
-        G["fetchWeatherSummary()\n(Open-Meteo Geocoding + Forecast)"]
-        H["generateItinerary()\n(Groq LLaMA 3.3 70B)"]
-    end
 
-    %% External Providers
-    subgraph Providers["External Services"]
-        I["Groq Whisper API"]
-        J["Groq LLaMA API"]
-        K["Open-Meteo APIs"]
-    end
-
-    %% Flows
-    A -- "Text Query" --> F
-    A -- "Voice Trigger" --> B --> E
-    E --> F
-    F --> G
-    G --> H
-    G --> D
-    H --> D
-    C --> A
-
-    %% Provider Links
-    E --- I
-    F --- J
-    H --- J
-    G --- K
-
-    %% Status Feedback
-    F -->|Status Updates| D
-```
+> **Note:** The architecture above illustrates how the Next.js frontend communicates with API routes, which then orchestrate calls to Groq (AI) and OpenWeatherMap before returning structured data to update the Zustand store and Mapbox component.
 
 ---
 
