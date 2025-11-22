@@ -28,6 +28,11 @@ export default function Home() {
   const { messages, addMessage, language, setLanguage, setMapLocation } = useStore();
   const { isRecording, startRecording, stopRecording } = useAudioRecorder();
 
+  // Set default language to Japanese on mount
+  useEffect(() => {
+    setLanguage('jp');
+  }, [setLanguage]);
+
   //Auto-scroll to bottom
   useEffect(() => {
     if (scrollRef.current) {
@@ -194,9 +199,10 @@ export default function Home() {
                 autoFocus
               />
               <div className="flex items-center gap-2 pr-2">
+                {/* LANDING MIC BUTTON - UPDATED TO BLACK */}
                 <button 
                   onClick={handleAudioClick}
-                  className={`p-4 rounded-full transition-all ${isRecording ? 'bg-red-50 text-red-500 scale-110' : 'hover:bg-gray-100 text-gray-400 hover:text-gray-600'}`}
+                  className={`p-4 rounded-full transition-all ${isRecording ? 'bg-red-50 text-red-500 scale-110' : 'bg-gray-900 text-white hover:bg-black shadow-md'}`}
                 >
                   {isRecording ? <StopCircle className="animate-pulse w-6 h-6" /> : <Mic className="w-6 h-6" />}
                 </button>
@@ -276,10 +282,11 @@ export default function Home() {
             {/*Input Area */}
             <div className="p-3 bg-white border-t border-gray-100">
               <div className="flex gap-2 items-center bg-gray-100 p-2 rounded-full border border-gray-200 focus-within:ring-2 focus-within:ring-blue-100 transition-all">
+                {/* CHAT MIC BUTTON - UPDATED TO BLACK */}
                 <button 
                   onClick={handleAudioClick}
                   disabled={loading}
-                  className={`p-2 rounded-full transition-all ${isRecording ? 'bg-red-500 text-white shadow-md' : 'bg-white text-gray-400 hover:text-gray-600'}`}
+                  className={`p-2 rounded-full transition-all ${isRecording ? 'bg-red-500 text-white shadow-md' : 'bg-gray-900 text-white hover:bg-black'}`}
                 >
                   {isRecording ? <StopCircle size={18} /> : <Mic size={18} />}
                 </button>
